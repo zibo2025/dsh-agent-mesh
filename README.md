@@ -43,10 +43,59 @@ process-global, so agents of unrelated sessions are never listed, messaged, or b
 
 ## Install
 
-**Primary channel: npm.** The published tarball ships pre-built `lib/`, so users need no build
-authorization and no toolchain.
+There are **two install methods** — npm and GitHub — and two activation scopes — bundle
+(every session on the profile) or preset-only (one dedicated orchestration preset). Pick one
+method, then one scope.
 
-### As an agent preset (recommended)
+| | Method 1: npm (recommended) | Method 2: GitHub |
+| --- | --- | --- |
+| Command | `dsh plugin --profile <name> add dsh-orchestrator` | `dsh plugin --profile <name> add github:zibo2025/dsh-agent-mesh#v0.1.0` |
+| What you get | Pre-built `lib/` from the registry | Source checkout, built on your machine |
+| Prerequisites | Nothing | pnpm runs this package's self-contained `prepare` build — pnpm ≥ 10 requires a one-time `allowBuilds` authorization (see below) |
+| Best for | Everyone; zero friction | Users without an npm account, or who want to audit/fork the source |
+
+### Method 1: npm (recommended)
+
+The published tarball ships pre-built `lib/`, so users need no build authorization and no
+toolchain:
+
+```bash
+dsh plugin --profile <name> add dsh-orchestrator
+```
+
+> China mirror note: if your npm is configured against a read-only mirror (e.g. npmmirror) and the
+> package is not synced yet, install with the official registry:
+> `dsh plugin --profile <name> add dsh-orchestrator --registry=https://registry.npmjs.org`.
+> Publishing always targets the official registry — the package pins
+> `publishConfig.registry`, mirrors never accept publishes.
+
+### Method 2: GitHub (no npm account needed)
+
+Git installs pull the **source**, not build artifacts, so pnpm runs this package's `prepare`
+script (a self-contained `tsc`) after installing — and pnpm ≥ 10 refuses to run it until the
+profile explicitly authorizes the build. Pin a tag or commit so later pushes cannot silently
+change what runs:
+
+```bash
+dsh plugin --profile <name> add github:zibo2025/dsh-agent-mesh#v0.1.0
+```
+
+On pnpm ≥ 10 the first `add` fails on purpose; copy the exact package key it prints into the
+profile's `pnpm-workspace.yaml`, then run the same command again:
+
+```yaml
+# <profile>/pnpm-workspace.yaml
+allowBuilds:
+  dsh-orchestrator: true
+```
+
+### Activation scope: every session, or one preset
+
+Both methods above install the **bundle**, whose patch layer inserts the mesh row globally:
+**every session on that profile** gets the mesh tools.
+
+To scope the mesh to a dedicated orchestration preset instead (recommended setup: the master/
+worker protocol only applies where you want it):
 
 1. Copy a preset (e.g. the shipped `standard`) to a new id and add the row:
 
@@ -59,47 +108,15 @@ authorization and no toolchain.
    (`tools`, `agents`, `subagents`, `systemPrompt`), so it needs **no isolate realm**:
    one instance per standing mount serves the whole agent tree.
 
-2. Make the package resolvable by the profile that launches the preset. Two options:
+2. Make the package resolvable by the profile that launches the preset, **without** activating
+   the bundle layer:
 
-   - **Preset-only** (mesh stays scoped to the preset; recommended): install it as a plain
-     dependency of the profile, without activating the bundle layer:
+   ```bash
+   cd "$DSH_HOME/profiles/<name>" && pnpm add dsh-orchestrator
+   ```
 
-     ```bash
-     cd "$DSH_HOME/profiles/<name>" && pnpm add dsh-orchestrator
-     ```
-
-   - **Everywhere**: install it as a bundle — the patch layer then inserts the mesh row
-     globally, so every session on that profile gets the mesh tools:
-
-     ```bash
-     dsh plugin --profile <name> add dsh-orchestrator
-     ```
-
-### As a bundle in a profile
-
-The package declares `dsh.bundle`, so installing it contributes its patch layer automatically:
-
-```bash
-dsh plugin --profile <name> add dsh-orchestrator
-```
-
-Every session on that profile then has the mesh tools available.
-
-### From GitHub (alternative, no npm account needed)
-
-Git installs pull the **source**, not build artifacts, so pnpm runs this package's `prepare`
-script (self-contained `tsc`) after installing — and pnpm ≥ 10 refuses to run it until the profile
-explicitly authorizes the build. Pin a tag or commit so later pushes cannot silently change what
-runs:
-
-```bash
-dsh plugin --profile <name> add github:<owner>/dsh-agent-mesh#v0.1.0
-# first add fails on pnpm >= 10; copy the exact package key it prints into the profile's
-# pnpm-workspace.yaml, e.g.:
-#   allowBuilds:
-#     dsh-orchestrator: true
-# then run the add command again
-```
+   (Works for the GitHub method too: `pnpm add github:zibo2025/dsh-agent-mesh#v0.1.0` with the
+   same `allowBuilds` authorization.)
 
 ## Tools
 
