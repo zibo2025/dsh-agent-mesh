@@ -43,7 +43,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zibo2025/dsh-agent-mesh.git"
+    "url": "git+https://github.com/zibo2025/dsh-orchestrator.git"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",

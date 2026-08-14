@@ -39,7 +39,7 @@ worker 请一律用 `agent_spawn` 派生。
 
 | | 方式一：npm（推荐） | 方式二：GitHub |
 | --- | --- | --- |
-| 命令 | `dsh plugin --profile <name> add dsh-orchestrator` | `dsh plugin --profile <name> add github:zibo2025/dsh-agent-mesh#v0.1.2` |
+| 命令 | `dsh plugin --profile <name> add dsh-orchestrator` | `dsh plugin --profile <name> add github:zibo2025/dsh-orchestrator#v0.1.2` |
 | 拿到什么 | registry 上预构建好的 `lib/` | 源码检出，在你的机器上构建 |
 | 前置条件 | 无 | pnpm 会运行本包自包含的 `prepare` 构建——pnpm ≥ 10 需要一次性 `allowBuilds` 授权（见下文） |
 | 适合谁 | 所有人；零摩擦 | 没有 npm 账号的用户，或想审计、fork 源码的用户 |
@@ -63,7 +63,7 @@ Git 安装拉取的是**源码**而非构建产物，因此安装后 pnpm 会运
 且不在任何智能体沙箱之内。
 
 ```bash
-dsh plugin --profile <name> add github:zibo2025/dsh-agent-mesh#v0.1.2
+dsh plugin --profile <name> add github:zibo2025/dsh-orchestrator#v0.1.2
 ```
 
 pnpm ≥ 10 下第一次 `add` 会故意失败；把它打印的确切包键复制进 profile 的 `pnpm-workspace.yaml`，
@@ -94,7 +94,7 @@ allowBuilds:
 cd "$DSH_HOME/profiles/<name>" && pnpm add dsh-orchestrator
 ```
 
-GitHub 方式同样适用：`pnpm add github:zibo2025/dsh-agent-mesh#v0.1.2`，同样需要 `allowBuilds` 授权。
+GitHub 方式同样适用：`pnpm add github:zibo2025/dsh-orchestrator#v0.1.2`，同样需要 `allowBuilds` 授权。
 
 ## 快速开始
 
@@ -224,7 +224,7 @@ npm run build        # tsc → lib/
 
 ```yaml
 - id: orchestrator
-  name: '../../../path/to/dsh-agent-mesh/lib/index.js?v=1'
+  name: '../../../path/to/dsh-orchestrator/lib/index.js?v=1'
 ```
 
 每次重建后递增 `?v=`，然后挂载校验预设（`agentPresets.standingKeyFor`）。发布后把行名换成裸包名
