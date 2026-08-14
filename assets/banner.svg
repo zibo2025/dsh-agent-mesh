@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#05080f"/>
+      <stop offset="0.5" stop-color="#0a1226"/>
+      <stop offset="1" stop-color="#05080f"/>
+    </linearGradient>
+    <linearGradient id="titleGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="0.45" stop-color="#9ecbff"/>
+      <stop offset="1" stop-color="#4d7cfe"/>
+    </linearGradient>
+    <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#4d7cfe" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#4d7cfe"/>
+      <stop offset="1" stop-color="#23d5e8" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="glowBlue" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#4d7cfe" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#4d7cfe" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowCyan" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#23d5e8" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#23d5e8" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="56" height="56" patternUnits="userSpaceOnUse">
+      <path d="M 56 0 L 0 0 0 56" fill="none" stroke="#3d5bb0" stroke-width="1" opacity="0.10"/>
+    </pattern>
+    <filter id="titleGlow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="16" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="softGlow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="5"/>
+    </filter>
+  </defs>
+
+  <!-- background -->
+  <rect width="1280" height="640" fill="url(#bg)"/>
+  <rect width="1280" height="640" fill="url(#grid)"/>
+  <ellipse cx="640" cy="300" rx="560" ry="300" fill="url(#glowBlue)"/>
+  <ellipse cx="1150" cy="560" rx="380" ry="220" fill="url(#glowCyan)"/>
+  <ellipse cx="120" cy="90" rx="300" ry="180" fill="url(#glowCyan)"/>
+
+  <!-- scattered particles -->
+  <g fill="#4d7cfe">
+    <circle cx="150" cy="480" r="2.5" opacity="0.35"/>
+    <circle cx="210" cy="540" r="1.8" opacity="0.3"/>
+    <circle cx="90" cy="380" r="1.8" opacity="0.25"/>
+    <circle cx="1120" cy="140" r="2.5" opacity="0.35"/>
+    <circle cx="1190" cy="230" r="1.8" opacity="0.3"/>
+    <circle cx="1040" cy="90" r="2.0" opacity="0.3"/>
+    <circle cx="1160" cy="380" r="1.6" opacity="0.25"/>
+    <circle cx="330" cy="150" r="1.6" opacity="0.25"/>
+    <circle cx="950" cy="500" r="1.8" opacity="0.28"/>
+  </g>
+
+  <!-- mesh cluster: top-left -->
+  <g stroke="#3d5bb0" stroke-width="1.6" opacity="0.55">
+    <line x1="120" y1="150" x2="210" y2="120"/>
+    <line x1="120" y1="150" x2="150" y2="230"/>
+    <line x1="210" y1="120" x2="260" y2="200"/>
+    <line x1="150" y1="230" x2="260" y2="200"/>
+  </g>
+  <g fill="#4d7cfe">
+    <circle cx="120" cy="150" r="6"/>
+    <circle cx="210" cy="120" r="4.5"/>
+    <circle cx="150" cy="230" r="4.5"/>
+    <circle cx="260" cy="200" r="4.5"/>
+  </g>
+
+  <!-- mesh cluster: bottom-right -->
+  <g stroke="#3d5bb0" stroke-width="1.6" opacity="0.55">
+    <line x1="1060" y1="470" x2="1140" y2="440"/>
+    <line x1="1060" y1="470" x2="1090" y2="545"/>
+    <line x1="1140" y1="440" x2="1200" y2="515"/>
+    <line x1="1090" y1="545" x2="1200" y2="515"/>
+  </g>
+  <g fill="#23d5e8">
+    <circle cx="1060" cy="470" r="6"/>
+    <circle cx="1140" cy="440" r="4.5"/>
+    <circle cx="1090" cy="545" r="4.5"/>
+    <circle cx="1200" cy="515" r="4.5"/>
+  </g>
+
+  <!-- brand -->
+  <text x="640" y="118" text-anchor="middle" font-family="Menlo, Monaco, Consolas, monospace"
+        font-size="30" letter-spacing="14" fill="#6f86c9" filter="url(#softGlow)">dsh-orchestrator</text>
+
+  <!-- main title -->
+  <text x="640" y="372" text-anchor="middle" font-family="Heiti SC, PingFang SC, Helvetica Neue, sans-serif"
+        font-size="200" font-weight="700" fill="url(#titleGrad)" filter="url(#titleGlow)"
+        letter-spacing="18">编排模式</text>
+
+  <!-- divider -->
+  <line x1="430" y1="428" x2="850" y2="428" stroke="url(#lineGrad)" stroke-width="2.5"/>
+  <circle cx="640" cy="428" r="3.5" fill="#7ec8ff"/>
+  <circle cx="430" cy="428" r="2.5" fill="#4d7cfe"/>
+  <circle cx="850" cy="428" r="2.5" fill="#23d5e8"/>
+
+  <!-- english subtitle -->
+  <text x="640" y="478" text-anchor="middle" font-family="Menlo, Monaco, Consolas, monospace"
+        font-size="24" letter-spacing="9" fill="#5c6f9e">ORCHESTRATION MODE · DEEPSEEK HARNESS</text>
+
+  <!-- chinese subtitle -->
+  <text x="640" y="552" text-anchor="middle" font-family="Heiti SC, PingFang SC, Helvetica Neue, sans-serif"
+        font-size="26" letter-spacing="3" fill="#8fa0c4">主智能体分解分派 · worker 全网格互通 · 逐 worker 指定模型与思考强度</text>
+</svg>
