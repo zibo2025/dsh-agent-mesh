@@ -1,7 +1,7 @@
 {
   "name": "dsh-orchestrator",
   "version": "0.1.3",
-  "description": "Native full-mesh agent communication plus per-subagent model and reasoning-effort assignment for DeepSeek Harness",
+  "description": "为 DeepSeek Harness 提供原生全网格智能体通信，支持按子智能体分配模型与推理力度",
   "type": "module",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
