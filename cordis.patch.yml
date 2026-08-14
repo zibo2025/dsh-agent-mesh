@@ -1,0 +1,14 @@
+# dsh-orchestrator — bundle layer.
+#
+# What this bundle contributes: the orchestration-mesh plugin row.
+#
+# The plugin publishes NO service and only consumes host-plane registries
+# (`tools`, `agents`, `subagents`, `systemPrompt`), so it needs no isolate
+# realm: one plugin instance per mounting composition serves the whole agent
+# tree (children join the standing composition by scope parentage).
+#
+# For an AGENT PRESET, add the same row to the preset's `agent.cordis.yml`
+# instead of (or in addition to) installing this bundle into a profile.
+- insert:
+    - id: orchestrator
+      name: dsh-orchestrator
