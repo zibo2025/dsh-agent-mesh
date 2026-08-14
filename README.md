@@ -1,6 +1,6 @@
 # dsh-orchestrator
 
-> 读音 **orchestrator**：美 /ˈɔːrkəstreɪtər/ · 英 /ˈɔːkɪstreɪtə(r)/，重音在第三音节，近似「奥克斯**特雷**特尔」。
+> **orchestrator** 意为「编排器 / 协调者」；读音：美 /ˈɔːrkəstreɪtər/ · 英 /ˈɔːkɪstreɪtə(r)/，重音在第三音节，近似「奥克斯**特雷**特尔」。
 
 面向 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) 的原生全互联智能体编排插件：
 一个主智能体负责任务分解与分派，多个 worker 负责实际执行，**任意智能体之间都能原生互发消息**
