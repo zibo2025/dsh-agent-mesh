@@ -7,6 +7,21 @@
 没有文件信箱、没有提示词约定、没有轮询。消息直接走 harness 自带的智能体收件箱——智能体循环中唯一的
 回合 FIFO 队列。
 
+```mermaid
+flowchart LR
+    U([用户需求]) --> M[主智能体<br/>任务分解与分派]
+    subgraph G[worker 网格 · 任意智能体之间互通]
+        W1[worker A<br/>独立模型与思考强度]
+        W2[worker B<br/>独立模型与思考强度]
+        W3[worker …]
+    end
+    M -- agent_spawn --> G
+    G -- 回报 --> M
+    M --> R([汇总结果给用户])
+    W1 <--> W2
+    W2 <--> W3
+```
+
 ## 前置要求
 
 - [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) —— 基于 `0.1.0-rc.6`
@@ -36,6 +51,19 @@ worker 请一律用 `agent_spawn` 派生。
 `$DSH_HOME/profiles/` 下的目录名（例如 `web`）。
 
 **安装完成后请重启 `dsh`**（新预设则开一个新会话）：运行中的进程不会热加载新安装的包。
+
+```mermaid
+flowchart TD
+    A[开始安装] --> B{选择渠道}
+    B -- npm · 推荐 --> C["dsh plugin --profile &lt;name&gt; add dsh-orchestrator"]
+    B -- GitHub --> D["dsh plugin --profile &lt;name&gt; add github:zibo2025/dsh-orchestrator#v0.1.3"]
+    C --> E{选择生效范围}
+    D --> E
+    E -- 组合包 --> F[该 profile 的所有会话生效<br/>patch 层全局插入]
+    E -- 仅预设 --> G[仅编排预设内生效<br/>agent.cordis.yml 加一行]
+    F --> H[重启 dsh]
+    G --> H
+```
 
 | | 方式一：npm（推荐） | 方式二：GitHub |
 | --- | --- | --- |
