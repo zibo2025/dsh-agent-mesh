@@ -59,11 +59,21 @@ authorization and no toolchain.
    (`tools`, `agents`, `subagents`, `systemPrompt`), so it needs **no isolate realm**:
    one instance per standing mount serves the whole agent tree.
 
-2. Install the package into the profile that launches the preset so the row resolves:
+2. Make the package resolvable by the profile that launches the preset. Two options:
 
-   ```bash
-   dsh plugin --profile <name> add dsh-orchestrator
-   ```
+   - **Preset-only** (mesh stays scoped to the preset; recommended): install it as a plain
+     dependency of the profile, without activating the bundle layer:
+
+     ```bash
+     cd "$DSH_HOME/profiles/<name>" && pnpm add dsh-orchestrator
+     ```
+
+   - **Everywhere**: install it as a bundle — the patch layer then inserts the mesh row
+     globally, so every session on that profile gets the mesh tools:
+
+     ```bash
+     dsh plugin --profile <name> add dsh-orchestrator
+     ```
 
 ### As a bundle in a profile
 
