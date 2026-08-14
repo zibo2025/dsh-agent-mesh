@@ -39,14 +39,14 @@ worker 请一律用 `agent_spawn` 派生。
 
 | | 方式一：npm（推荐） | 方式二：GitHub |
 | --- | --- | --- |
-| 命令 | `dsh plugin --profile <name> add dsh-orchestrator` | `dsh plugin --profile <name> add github:zibo2025/dsh-orchestrator#v0.1.2` |
+| 命令 | `dsh plugin --profile <name> add dsh-orchestrator` | `dsh plugin --profile <name> add github:zibo2025/dsh-orchestrator#v0.1.3` |
 | 拿到什么 | registry 上预构建好的 `lib/` | 源码检出，在你的机器上构建 |
 | 前置条件 | 无 | pnpm 会运行本包自包含的 `prepare` 构建——pnpm ≥ 10 需要一次性 `allowBuilds` 授权（见下文） |
 | 适合谁 | 所有人；零摩擦 | 没有 npm 账号的用户，或想审计、fork 源码的用户 |
 
 ### 方式一：npm（推荐）
 
-发布到 registry 的 tarball 自带预构建的 `lib/`，用户无需构建授权、无需工具链：
+npm 包自带预构建产物，无需构建授权、无需工具链：
 
 ```bash
 dsh plugin --profile <name> add dsh-orchestrator
@@ -63,7 +63,7 @@ Git 安装拉取的是**源码**而非构建产物，因此安装后 pnpm 会运
 且不在任何智能体沙箱之内。
 
 ```bash
-dsh plugin --profile <name> add github:zibo2025/dsh-orchestrator#v0.1.2
+dsh plugin --profile <name> add github:zibo2025/dsh-orchestrator#v0.1.3
 ```
 
 pnpm ≥ 10 下第一次 `add` 会故意失败；把它打印的确切包键复制进 profile 的 `pnpm-workspace.yaml`，
@@ -94,7 +94,7 @@ allowBuilds:
 cd "$DSH_HOME/profiles/<name>" && pnpm add dsh-orchestrator
 ```
 
-GitHub 方式同样适用：`pnpm add github:zibo2025/dsh-orchestrator#v0.1.2`，同样需要 `allowBuilds` 授权。
+GitHub 方式同样适用：`pnpm add github:zibo2025/dsh-orchestrator#v0.1.3`，同样需要 `allowBuilds` 授权。
 
 ## 快速开始
 
@@ -210,25 +210,6 @@ harness 内核本身就内置了基于收件箱的消息系统：`Agent.followup
 
 **网格成员**即「以调用者根节点为根的派生树」。`agents` 注册表是进程全局的，因此无关会话的智能体
 永远不会被列出、被发消息或被广播。
-
-## 开发
-
-*仅维护者需要。*
-
-```bash
-npm install
-npm run build        # tsc → lib/
-```
-
-本地预设开发：在预设行里用带缓存破坏的版本查询串引用构建产物（loader 会缓存模块 URL）：
-
-```yaml
-- id: orchestrator
-  name: '../../../path/to/dsh-orchestrator/lib/index.js?v=1'
-```
-
-每次重建后递增 `?v=`，然后挂载校验预设（`agentPresets.standingKeyFor`）。发布后把行名换成裸包名
-`dsh-orchestrator`。
 
 ## 许可证
 
