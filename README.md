@@ -43,6 +43,9 @@ process-global, so agents of unrelated sessions are never listed, messaged, or b
 
 ## Install
 
+**Primary channel: npm.** The published tarball ships pre-built `lib/`, so users need no build
+authorization and no toolchain.
+
 ### As an agent preset (recommended)
 
 1. Copy a preset (e.g. the shipped `standard`) to a new id and add the row:
@@ -71,6 +74,22 @@ dsh plugin --profile <name> add dsh-orchestrator
 ```
 
 Every session on that profile then has the mesh tools available.
+
+### From GitHub (alternative, no npm account needed)
+
+Git installs pull the **source**, not build artifacts, so pnpm runs this package's `prepare`
+script (self-contained `tsc`) after installing — and pnpm ≥ 10 refuses to run it until the profile
+explicitly authorizes the build. Pin a tag or commit so later pushes cannot silently change what
+runs:
+
+```bash
+dsh plugin --profile <name> add github:<owner>/dsh-agent-mesh#v0.1.0
+# first add fails on pnpm >= 10; copy the exact package key it prints into the profile's
+# pnpm-workspace.yaml, e.g.:
+#   allowBuilds:
+#     dsh-orchestrator: true
+# then run the add command again
+```
 
 ## Tools
 
